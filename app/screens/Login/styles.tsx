@@ -17,5 +17,5 @@ export default StyleSheet.create({
   signInButton: {marginTop: 48, borderRadius: 6, borderColor: '#fff'},
   buttonText: {color: '#fff'},
   inputTitle: {color: '#fff'},
-  input: {color: '#fff'},
+  input: {color: '#fff', paddingLeft: 0},
 });
