@@ -18,4 +18,6 @@ export default StyleSheet.create({
   buttonText: {color: '#fff'},
   inputTitle: {color: '#fff'},
   input: {color: '#fff', paddingLeft: 0},
+  disabledButton: {borderColor: '#b3b4b5'},
+  disabledButtonText: {color: '#b3b4b5'},
 });

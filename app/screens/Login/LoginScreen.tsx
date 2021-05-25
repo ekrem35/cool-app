@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image} from 'react-native';
 import {
   Container,
@@ -14,6 +14,18 @@ import styles from './styles';
 const LogoWhite = require('../../images/logo-white.png');
 
 const Login = () => {
+  const [isValid, setIsValid] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (username.length < 3 || password.length < 4) {
+      isValid === true && setIsValid(false);
+    } else {
+      isValid === false && setIsValid(true);
+    }
+  }, [username, password, isValid]);
+
   return (
     <Container>
       <LinearGradient
@@ -25,14 +37,34 @@ const Login = () => {
           <Image style={styles.logo} source={LogoWhite} />
           <Item style={styles.userNameItem} floatingLabel>
             <Label style={styles.inputTitle}>Username</Label>
-            <Input style={styles.input} />
+            <Input
+              value={username}
+              onChangeText={uname => setUsername(uname)}
+              style={styles.input}
+            />
           </Item>
           <Item style={styles.passwordItem} floatingLabel>
             <Label style={styles.inputTitle}>Password</Label>
-            <Input style={styles.input} />
+            <Input
+              value={password}
+              onChangeText={pass => setPassword(pass)}
+              secureTextEntry
+              style={styles.input}
+            />
           </Item>
-          <Button transparent style={styles.signInButton} bordered full>
-            <Text style={styles.buttonText}>Sign in</Text>
+          <Button
+            disabled={!isValid}
+            transparent
+            style={[styles.signInButton, isValid ? {} : styles.disabledButton]}
+            bordered
+            full>
+            <Text
+              style={[
+                styles.buttonText,
+                isValid ? {} : styles.disabledButtonText,
+              ]}>
+              Sign in
+            </Text>
           </Button>
         </Content>
       </LinearGradient>
