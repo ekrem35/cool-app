@@ -10,13 +10,14 @@ import {
   Text,
 } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
-import styles from './styles';
 const LogoWhite = require('../../images/logo-white.png');
+import request from '../../helpers/request';
+import styles from './styles';
 
 const Login = () => {
   const [isValid, setIsValid] = useState(false);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('eve.holt@reqres.in');
+  const [password, setPassword] = useState('cityslicka');
 
   useEffect(() => {
     if (username.length < 3 || password.length < 4) {
@@ -25,6 +26,23 @@ const Login = () => {
       isValid === false && setIsValid(true);
     }
   }, [username, password, isValid]);
+
+  const onPressSignIn = async () => {
+    try {
+      const response = await request.post({
+        url: 'https://reqres.in/api/login',
+        body: {
+          email: username,
+          password: password,
+        },
+      });
+      if (response.token) {
+        // auth process
+      }
+    } catch (error) {
+      // error handle
+    }
+  };
 
   return (
     <Container>
@@ -53,6 +71,7 @@ const Login = () => {
             />
           </Item>
           <Button
+            onPress={onPressSignIn}
             disabled={!isValid}
             transparent
             style={[styles.signInButton, isValid ? {} : styles.disabledButton]}
