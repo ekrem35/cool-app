@@ -3,30 +3,13 @@
  */
 
 import React from 'react';
-import {
-  Root,
-  Container,
-  Content,
-  Header,
-  Title,
-  Left,
-  Body,
-  Text,
-} from 'native-base';
+import {Root} from 'native-base';
+import Router from './app/router';
 
 const App = () => {
   return (
     <Root>
-      <Container>
-        <Header>
-          <Left>
-            <Title>BeCool</Title>
-          </Left>
-          <Body />
-        </Header>
-        <Text>UI Components</Text>
-        <Content />
-      </Container>
+      <Router />
     </Root>
   );
 };
