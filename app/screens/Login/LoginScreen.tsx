@@ -17,6 +17,7 @@ import {ReduxState} from '../../state/stateTypes';
 import {useSelector, useDispatch} from 'react-redux';
 import {saveUser} from '../../state/actions/user';
 import {Actions} from 'react-native-router-flux';
+import Spinner from '../../components/Spinner';
 
 const Login = () => {
   const {mail} = useSelector((state: ReduxState) => ({
@@ -27,7 +28,9 @@ const Login = () => {
 
   const [isValid, setIsValid] = useState(false);
   const [username, setUsername] = useState(mail);
-  const [password, setPassword] = useState('cityslicka');
+  const [password, setPassword] = useState('');
+  const [showSpinner, setShowSpinner] = useState(false);
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     if (username.length < 3 || password.length < 4) {
@@ -39,6 +42,7 @@ const Login = () => {
 
   const onPressSignIn = async () => {
     try {
+      setShowSpinner(true);
       const response = await request.post({
         url: 'https://reqres.in/api/login',
         body: {
@@ -48,15 +52,26 @@ const Login = () => {
       });
       if (response.token) {
         dispatch(saveUser({mail: username, token: response.token}));
-        Actions.mainScreen();
+        setTimeout(() => {
+          Actions.mainScreen();
+          setShowSpinner(false);
+          return 1;
+        }, 1000);
+      } else {
+        setMessage('Wrong password or username');
+        setShowSpinner(false);
       }
     } catch (error) {
-      console.error(error.message);
+      setMessage('Please try again later');
+      setShowSpinner(false);
     }
   };
 
+  const clearMessage = () => setMessage('');
+
   return (
     <Container>
+      <Spinner visible={showSpinner} />
       <LinearGradient
         colors={['#f0645d', '#ee205f']}
         end={{x: 1, y: 0}}
@@ -67,6 +82,7 @@ const Login = () => {
           <Item style={styles.userNameItem} floatingLabel>
             <Label style={styles.inputTitle}>Username</Label>
             <Input
+              onFocus={clearMessage}
               value={username}
               onChangeText={uname => setUsername(uname)}
               style={styles.input}
@@ -75,6 +91,7 @@ const Login = () => {
           <Item style={styles.passwordItem} floatingLabel>
             <Label style={styles.inputTitle}>Password</Label>
             <Input
+              onFocus={clearMessage}
               value={password}
               onChangeText={pass => setPassword(pass)}
               secureTextEntry
@@ -96,6 +113,7 @@ const Login = () => {
               Sign in
             </Text>
           </Button>
+          <Text style={styles.formMessage}>{message}</Text>
         </Content>
       </LinearGradient>
     </Container>
