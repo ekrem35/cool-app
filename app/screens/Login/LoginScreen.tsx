@@ -13,10 +13,20 @@ import LinearGradient from 'react-native-linear-gradient';
 const LogoWhite = require('../../images/logo-white.png');
 import request from '../../helpers/request';
 import styles from './styles';
+import {ReduxState} from '../../state/stateTypes';
+import {useSelector, useDispatch} from 'react-redux';
+import {saveUser} from '../../state/actions/user';
+import {Actions} from 'react-native-router-flux';
 
 const Login = () => {
+  const {mail} = useSelector((state: ReduxState) => ({
+    mail: state.user.mail,
+  }));
+
+  const dispatch = useDispatch();
+
   const [isValid, setIsValid] = useState(false);
-  const [username, setUsername] = useState('eve.holt@reqres.in');
+  const [username, setUsername] = useState(mail);
   const [password, setPassword] = useState('cityslicka');
 
   useEffect(() => {
@@ -37,10 +47,11 @@ const Login = () => {
         },
       });
       if (response.token) {
-        // auth process
+        dispatch(saveUser({mail: username, token: response.token}));
+        Actions.mainScreen();
       }
     } catch (error) {
-      // error handle
+      console.error(error.message);
     }
   };
 
