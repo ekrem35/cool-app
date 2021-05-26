@@ -7,6 +7,7 @@ const Router = () => {
     <RouterFlux>
       <Stack hideNavBar hideTabBar key="root">
         <Scene key="login" component={Screens.Login} />
+        <Scene key="mainScreen" component={Screens.MainScreen} />
       </Stack>
     </RouterFlux>
   );
