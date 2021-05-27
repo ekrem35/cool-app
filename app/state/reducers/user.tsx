@@ -1,4 +1,4 @@
-import {SAVE_USER} from '../actionTypes';
+import {LOGOUT, SAVE_USER} from '../actionTypes';
 
 interface actionProps {
   type: string;
@@ -20,6 +20,11 @@ export default (state: stateProps = initialState, action: actionProps) => {
       return {
         ...state,
         ...action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        ...initialState,
       };
     default:
       return state;

@@ -1,4 +1,4 @@
-import {SAVE_USER} from '../actionTypes';
+import {SAVE_USER, LOGOUT} from '../actionTypes';
 import {UserProps} from '../stateTypes';
 
 /**
@@ -9,4 +9,8 @@ import {UserProps} from '../stateTypes';
 export const saveUser = (user: UserProps) => ({
   type: SAVE_USER,
   payload: user,
+});
+
+export const logout = () => ({
+  type: LOGOUT,
 });
