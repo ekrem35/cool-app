@@ -16,6 +16,6 @@ React native code challange project
 
 `cd cool-app`
 
-`cd npm i`
+`npm i`
 
 `npx react-native run-android`
