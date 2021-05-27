@@ -19,3 +19,7 @@ React native code challange project
 `npm i`
 
 `npx react-native run-android`
+
+# Download the apk
+
+https://github.com/ekrem35/cool-app/releases/download/1.0.0/app-release.apk
