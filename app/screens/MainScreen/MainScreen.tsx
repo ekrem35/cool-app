@@ -34,7 +34,7 @@ const MainScreen = () => {
 
   const onPressLogout = () => {
     dispatch(logout());
-    Actions.login();
+    Actions.replace('login');
   };
 
   return (

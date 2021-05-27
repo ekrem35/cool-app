@@ -53,7 +53,7 @@ const Login = () => {
       if (response.token) {
         dispatch(saveUser({mail: username, token: response.token}));
         setTimeout(() => {
-          Actions.mainScreen();
+          Actions.replace('mainScreen');
           setShowSpinner(false);
           return 1;
         }, 1000);
